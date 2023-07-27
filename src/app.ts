@@ -6,7 +6,7 @@ import { ThrottlerModule } from '@nestjs/throttler'
 import { PrismaModule } from './config/prisma/prisma'
 import { HealthCheckModule } from './modules/HealthCheck/healthCheck'
 
-import env from './helpers/env'
+import env from './config/env'
 
 @Module({
   imports: [
