@@ -8,8 +8,9 @@ export class CreatePostDto {
   @IsString()
   content: Post['content']
 
+  @IsOptional()
   @IsEmail()
-  authorEmail: string
+  authorId: Post['authorId']
 
   @IsOptional()
   @IsBoolean()

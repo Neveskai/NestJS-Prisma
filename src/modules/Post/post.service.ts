@@ -7,12 +7,6 @@ import { findPosts, updatePost } from './models'
 export class PostService {
   constructor(private prisma: PrismaService) {}
 
-  async post(postWhereUniqueInput: Prisma.PostWhereUniqueInput): Promise<Post | null> {
-    return this.prisma.post.findUnique({
-      where: postWhereUniqueInput,
-    })
-  }
-
   async posts(params: findPosts): Promise<Post[]> {
     return this.prisma.post.findMany(params)
   }

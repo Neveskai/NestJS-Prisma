@@ -7,11 +7,6 @@ import { CreatePostDto } from './dto/createPost.dto'
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
-  @Get(':id')
-  async getPostById(@Param('id', ParseIntPipe) id: number): Promise<PostModel> {
-    return this.postService.post({ id })
-  }
-
   @Get('feed/published')
   async getPublishedPosts(): Promise<PostModel[]> {
     return this.postService.posts({
@@ -28,13 +23,13 @@ export class PostController {
 
   @Post()
   async createDraft(@Body() postData: CreatePostDto): Promise<PostModel> {
-    const { title, content, authorEmail } = postData
+    const { title, content, authorId } = postData
 
     const payload = {
       title,
       content,
       author: {
-        connect: { email: authorEmail },
+        connect: { id: authorId as number },
       },
     }
 

@@ -29,10 +29,10 @@ export class UserController {
     try {
       return await this.userService.createUser(userData)
     } catch (error) {
-      if (error.meta.target === 'User_email_key')
+      if (error?.meta?.target === 'User_email_key')
         throw new HttpException('Email já cadastrado', HttpStatusCode.Ok)
 
-      throw new HttpException(error, HttpStatusCode.InternalServerError)
+      throw new HttpException(error, HttpStatusCode.InternalServerError, { cause: error })
     }
   }
 
@@ -43,7 +43,7 @@ export class UserController {
     try {
       return this.userService.findUsers({ fields })
     } catch (error) {
-      throw new HttpException(error, HttpStatusCode.InternalServerError)
+      throw new HttpException(error, HttpStatusCode.InternalServerError, { cause: error })
     }
   }
 }

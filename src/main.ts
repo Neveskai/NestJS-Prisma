@@ -12,7 +12,8 @@ async function bootstrap() {
   })
   const logger = app.get(Logger)
   const env = app.get(ConfigService)
-  const port = env.get<number>('port')
+  const port = env.get('port') as number
+  const contextPath = env.get('contextPath') as string
 
   app.useGlobalPipes(
     new ValidationPipe({
@@ -25,7 +26,7 @@ async function bootstrap() {
   app.use(helmet())
   app.enableCors()
   app.enableShutdownHooks()
-  app.setGlobalPrefix(env.get<string>('contextPath'))
+  app.setGlobalPrefix(contextPath)
 
   await app.listen(port)
 

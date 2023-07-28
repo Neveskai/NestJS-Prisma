@@ -1,6 +1,6 @@
 export default () => ({
   currEnv: process.env.CURRENT_ENVIRONMENT || 'dev',
-  port: parseInt(process.env.PORT, 10) || 3020,
+  port: parseInt(process.env.PORT as string, 10) || 3020,
   databaseUrl: process.env.DATABASE_URL,
   setupParametersUrl: process.env.API_INSTALA_PARAM,
   contextPath: process.env.CONTEXT_PATH,
