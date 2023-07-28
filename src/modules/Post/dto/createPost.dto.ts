@@ -10,7 +10,7 @@ export class CreatePostDto {
 
   @IsOptional()
   @IsEmail()
-  authorId: Post['authorId']
+  authorId?: Post['authorId']
 
   @IsOptional()
   @IsBoolean()

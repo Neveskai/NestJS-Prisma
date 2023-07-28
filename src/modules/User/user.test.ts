@@ -1,8 +1,6 @@
-// @ts-nocheck
 import { Test } from '@nestjs/testing'
 import { UserController } from './user.controller'
 import { UserService } from './user.service'
-import { prismaMock } from 'src/__tests__/prisma/singleton'
 import { AppModule } from 'src/app'
 import { ArgumentMetadata, ValidationPipe } from '@nestjs/common'
 import { CreateUserDto } from './dto/createUser.dto'
@@ -19,7 +17,6 @@ describe('User', () => {
 
     userController = moduleRef.get(UserController)
     userService = moduleRef.get(UserService)
-
     validation = new ValidationPipe({
       whitelist: true,
       transform: true,
@@ -34,22 +31,31 @@ describe('User', () => {
 
   it('should create new user', async () => {
     const newUser = {
-      email: 'Wendell@gmail.com',
-      name: 'Wendell',
+      email: 'TestUnit@gmail.com',
+      name: 'TestUnit',
       posts: {
         create: [
           {
-            title: 'myPost',
-            content: 'myFirstPost',
+            title: 'Testing',
+            content: 'TestingContent',
           },
         ],
       },
     }
 
-    prismaMock.user.create.mockResolvedValue(newUser)
-    userService.createUser = prismaMock.user.create
+    const testUser = await userService.findOne({ email: newUser.email })
+    if (testUser) await userService.deleteUser({ email: newUser.email })
 
-    expect(await validation.transform(newUser, metadata)).toBeInstanceOf(CreateUserDto)
-    await expect(userController.createUser(newUser)).resolves.toEqual(newUser)
+    const validatedValue = await validation.transform(newUser, metadata)
+    const returnValue = await userController.createUser(validatedValue)
+
+    expect(validatedValue).toBeInstanceOf(CreateUserDto)
+    expect(returnValue).toEqual({
+      ...newUser,
+      id: returnValue.id,
+      posts: undefined,
+    })
+
+    await userService.deleteUser({ id: returnValue.id })
   })
 })
