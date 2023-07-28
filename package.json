@@ -85,7 +85,7 @@
     "coverageDirectory": "../coverage",
     "testEnvironment": "node",
     "setupFilesAfterEnv": [
-      "<rootDir>/singleton.ts"
+      "<rootDir>/__tests__/prisma/singleton.ts"
     ]
   }
 }
