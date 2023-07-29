@@ -4,18 +4,6 @@ import { ArgumentMetadata, ValidationPipe } from '@nestjs/common'
 import { CreateUserDto } from './dto/createUser.dto'
 import { AppModule } from 'src/app'
 
-jest.mock('src/config/prisma/prisma.service', () => ({
-  PrismaService: class PrismaService {
-    user = {
-      create: ({ data: userInput }: any) => ({
-        ...userInput,
-        id: 1,
-        posts: userInput?.posts?.create[0],
-      }),
-    }
-  },
-}))
-
 describe('User', () => {
   let userController: UserController
   let validation: ValidationPipe
