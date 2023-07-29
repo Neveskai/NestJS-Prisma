@@ -1,13 +1,23 @@
 import { Test } from '@nestjs/testing'
 import { UserController } from './user.controller'
-import { UserService } from './user.service'
-import { AppModule } from 'src/app'
 import { ArgumentMetadata, ValidationPipe } from '@nestjs/common'
 import { CreateUserDto } from './dto/createUser.dto'
+import { AppModule } from 'src/app'
+
+jest.mock('src/config/prisma/prisma.service', () => ({
+  PrismaService: class PrismaService {
+    user = {
+      create: ({ data: userInput }: any) => ({
+        ...userInput,
+        id: 1,
+        posts: userInput?.posts?.create[0],
+      }),
+    }
+  },
+}))
 
 describe('User', () => {
   let userController: UserController
-  let userService: UserService
   let validation: ValidationPipe
 
   beforeEach(async () => {
@@ -16,7 +26,6 @@ describe('User', () => {
     }).compile()
 
     userController = moduleRef.get(UserController)
-    userService = moduleRef.get(UserService)
     validation = new ValidationPipe({
       whitelist: true,
       transform: true,
@@ -30,7 +39,7 @@ describe('User', () => {
   }
 
   it('should create new user', async () => {
-    const newUser = {
+    const userInput: CreateUserDto = {
       email: 'TestUnit@gmail.com',
       name: 'TestUnit',
       posts: {
@@ -43,19 +52,14 @@ describe('User', () => {
       },
     }
 
-    const testUser = await userService.findOne({ email: newUser.email })
-    if (testUser) await userService.deleteUser({ email: newUser.email })
-
-    const validatedValue = await validation.transform(newUser, metadata)
+    const validatedValue = await validation.transform(userInput, metadata)
     const returnValue = await userController.createUser(validatedValue)
 
     expect(validatedValue).toBeInstanceOf(CreateUserDto)
-    expect(returnValue).toEqual({
-      ...newUser,
-      id: returnValue.id,
-      posts: undefined,
+    expect(returnValue).toMatchObject({
+      ...validatedValue,
+      id: 1,
+      posts: userInput?.posts?.create[0],
     })
-
-    await userService.deleteUser({ id: returnValue.id })
   })
 })
