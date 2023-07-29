@@ -2,7 +2,8 @@ import { Test } from '@nestjs/testing'
 import { UserController } from './user.controller'
 import { ArgumentMetadata, ValidationPipe } from '@nestjs/common'
 import { CreateUserDto } from './dto/createUser.dto'
-import { AppModule } from 'src/app'
+import { UserModule } from './user'
+import { PrismaModule } from 'src/config/prisma/prisma'
 
 describe('User', () => {
   let userController: UserController
@@ -10,7 +11,7 @@ describe('User', () => {
 
   beforeEach(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [PrismaModule, UserModule],
     }).compile()
 
     userController = moduleRef.get(UserController)
