@@ -26,13 +26,14 @@ describe('User', () => {
     }).compile()
 
     userController = moduleRef.get(UserController)
+
     validation = new ValidationPipe({
       whitelist: true,
       transform: true,
     })
   })
 
-  const metadata: ArgumentMetadata = {
+  const createUserMetadata: ArgumentMetadata = {
     type: 'body',
     metatype: CreateUserDto,
     data: '',
@@ -52,7 +53,7 @@ describe('User', () => {
       },
     }
 
-    const validatedValue = await validation.transform(userInput, metadata)
+    const validatedValue = await validation.transform(userInput, createUserMetadata)
     const returnValue = await userController.createUser(validatedValue)
 
     expect(validatedValue).toBeInstanceOf(CreateUserDto)
