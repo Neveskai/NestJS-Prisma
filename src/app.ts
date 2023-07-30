@@ -5,6 +5,7 @@ import { PostModule } from './modules/Post/post'
 import { ThrottlerModule } from '@nestjs/throttler'
 import { PrismaModule } from './config/prisma/prisma'
 import { HealthCheckModule } from './modules/HealthCheck/healthCheck'
+import { HttpClientModule } from './config/httpClient/httpClient'
 
 import env from './config/env'
 
@@ -18,8 +19,9 @@ import env from './config/env'
       isGlobal: true,
       load: [env],
     }),
-    PrismaModule,
     HealthCheckModule,
+    HttpClientModule,
+    PrismaModule,
     UserModule,
     PostModule,
   ],
