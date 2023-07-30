@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common'
-import { PrismaService } from 'src/config/prisma/prisma.service'
+import { PrismaService } from '@/config/prisma/prisma.service'
 import { User, Prisma } from '@prisma/client'
 import { findUsers, updateUser } from './models'
 
@@ -20,7 +20,7 @@ export class UserService {
   }
 
   async createUser(data: Prisma.UserCreateInput): Promise<User> {
-    return this.prisma.user.create({ data })
+    return this.prisma.user.create({ data, include: { posts: !!data?.posts?.create } })
   }
 
   async updateUser(params: updateUser): Promise<User> {

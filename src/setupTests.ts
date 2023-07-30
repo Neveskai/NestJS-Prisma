@@ -1,4 +1,4 @@
-jest.mock('src/config/prisma/prisma.service', () => ({
+jest.mock('@/config/prisma/prisma.service', () => ({
   PrismaService: class PrismaService {
     user = {
       create: ({ data: userInput }: any) => ({

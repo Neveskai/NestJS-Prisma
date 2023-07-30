@@ -14,7 +14,7 @@ import { User as UserModel } from '@prisma/client'
 import { CreateUserDto } from './dto/createUser.dto'
 import { HttpStatusCode } from 'axios'
 import { CacheInterceptor } from '@nestjs/cache-manager'
-import { FieldsPipe } from 'src/helpers/fields.pipe'
+import { FieldsPipe } from '@/helpers/fields.pipe'
 import { FindUsersDto } from './dto/findUsers.dto'
 
 const validFields = ['id', 'name', 'email', 'posts']

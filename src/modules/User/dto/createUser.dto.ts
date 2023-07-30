@@ -1,6 +1,6 @@
 import { IsEmail, IsObject, IsOptional, IsString } from 'class-validator'
 import { User } from '@prisma/client'
-import { CreatePostDto } from 'src/modules/Post/dto/createPost.dto'
+import { CreatePostDto } from '@/modules/Post/dto/createPost.dto'
 
 export class CreateUserDto {
   @IsString()

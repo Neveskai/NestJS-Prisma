@@ -8,7 +8,7 @@ import {
   MemoryHealthIndicator,
 } from '@nestjs/terminus'
 
-import { PrismaService } from 'src/config/prisma/prisma.service'
+import { PrismaService } from '@/config/prisma/prisma.service'
 
 @Injectable()
 export class HealthCheckService extends HealthIndicator {

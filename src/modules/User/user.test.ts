@@ -3,7 +3,7 @@ import { UserController } from './user.controller'
 import { ArgumentMetadata, ValidationPipe } from '@nestjs/common'
 import { CreateUserDto } from './dto/createUser.dto'
 import { UserModule } from './user'
-import { PrismaModule } from 'src/config/prisma/prisma'
+import { PrismaModule } from '@/config/prisma/prisma'
 
 describe('User', () => {
   let userController: UserController
