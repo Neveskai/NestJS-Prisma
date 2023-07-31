@@ -16,11 +16,13 @@ import { HttpStatusCode } from 'axios'
 import { CacheInterceptor } from '@nestjs/cache-manager'
 import { FieldsPipe } from '@/helpers/fields.pipe'
 import { FindUsersDto } from './dto/findUsers.dto'
+import { TransformInterceptor } from '@/helpers/transform.interceptor'
 
 const validFields = ['id', 'name', 'email', 'posts']
 
 @Controller('user')
 @UseInterceptors(CacheInterceptor)
+@UseInterceptors(TransformInterceptor)
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

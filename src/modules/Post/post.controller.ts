@@ -1,9 +1,21 @@
-import { Controller, Get, Param, Post, Body, Put, Delete, ParseIntPipe } from '@nestjs/common'
+import {
+  Controller,
+  Get,
+  Param,
+  Post,
+  Body,
+  Put,
+  Delete,
+  ParseIntPipe,
+  UseInterceptors,
+} from '@nestjs/common'
 import { PostService } from './post.service'
 import { Post as PostModel } from '@prisma/client'
 import { CreatePostDto } from './dto/createPost.dto'
+import { TransformInterceptor } from '@/helpers/transform.interceptor'
 
 @Controller('post')
+@UseInterceptors(TransformInterceptor)
 export class PostController {
   constructor(private readonly postService: PostService) {}
 
